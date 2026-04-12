@@ -4,187 +4,22 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Instagram 3:4 Carousel</title>
-    <style>
-              :root {
-                  --aspect-ratio: 1080 / 1440;
-                  --bg-color: #111;
-                  --card-radius: 8px;
-              }
-
-              body {
-                  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
-                  display: flex;
-                  justify-content: center;
-                  align-items: center;
-                  min-height: 100vh;
-                  margin: 0;
-                  background-color: var(--bg-color);
-              }
-
-              /* Main Container */
-              .instagram-post {
-                  width: 100%;
-                  max-width: 450px; /*Limits size on desktop*/
-                  background: #222;
-                  border: 1px solid #000;
-                  border-radius: var(--card-radius);
-                  position: relative;
-              }
-
-              @media (max-width: 600px) {
-                   .instagram-post {
-                    max-width: 95vw;
-                   }     
-                }
-
-              /* The 1080x1440 Aspect Ratio Box */
-              .carousel-viewport {
-                  position: relative;
-                  width: 100%;
-                  aspect-ratio: var(--aspect-ratio);
-                  overflow-x: auto;
-                  display: flex;
-                  scroll-snap-type: x mandatory;
-                  scrollbar-width: none; /* Hide scrollbar Firefox */
-                  -ms-overflow-style: none; /* Hide scrollbar IE/Edge */
-              }
-
-              .carousel-viewport::-webkit-scrollbar {
-                  display: none; /* Hide scrollbar Chrome/Safari */
-              }
-
-              .slide {
-                  flex: 0 0 100%;
-                  width: 100%;
-                  height: 100%;
-                  scroll-snap-align: start;
-              }
-
-              .slide img {
-                  width: 100%;
-                  height: 100%;
-                  object-fit: cover;
-                  display: block;
-              }
-
-              /* Navigation Buttons */
-              .nav-btn {
-                  position: absolute;
-                  top: 50%;
-                  transform: translateY(-50%);
-                  background: rgba(255, 255, 255, 0.8);
-                  border: none;
-                  border-radius: 50%;
-                  width: 30px;
-                  height: 30px;
-                  cursor: pointer;
-                  display: flex;
-                  align-items: center;
-                  justify-content: center;
-                  box-shadow: 0 4px 12px rgba(0,0,0,0.15);
-                  z-index: 10;
-                  transition: opacity 0.3s;
-              }
-
-              .nav-btn:disabled { opacity: 0; cursor: default; }
-              .prev-btn { left: 10px; }
-              .next-btn { right: 10px; }
-
-              /* Indicators (Dots) */
-              .dots-container {
-                  display: flex;
-                  justify-content: center;
-                  gap: 4px;
-                  padding: 12px 0;
-              }
-
-              .dot {
-                  width: 6px;
-                  height: 6px;
-                  background: #a8a8a8;
-                  border-radius: 50%;
-                  transition: background 0.3s, transform 0.3s;
-              }
-
-              .dot.active {
-                  background: #0095f6;
-                  transform: scale(1.2);
-              }
-    </style>
+    <link rel="stylesheet" href="style.css">
+    <script src="script.js" defer></script>
   </head>
   <body>
-    <div class="instagram-post">
-      <div class="carousel-viewport" id="viewport">
-        <div class="slide"><img src="images/collect/1.jpg" alt="Post 1" /></div>
-        <div class="slide"><img src="images/collect/2.jpg" alt="Post 2" /></div>
-        <div class="slide"><img src="images/collect/3.jpg" alt="Post 3" /></div>
-        <div class="slide"><img src="images/collect/4.jpg" alt="Post 4" /></div>
-        <div class="slide"><img src="images/collect/5.jpg" alt="Post 1" /></div>
-        <div class="slide"><img src="images/collect/6.jpg" alt="Post 2" /></div>
-        <div class="slide"><img src="images/collect/7.jpg" alt="Post 3" /></div>
-        <div class="slide"><img src="images/collect/8.jpg" alt="Post 4" /></div>
-        <div class="slide"><img src="images/collect/9.jpg" alt="Post 1" /></div>
-        <div class="slide">
-          <img src="images/collect/10.jpg" alt="Post 2" />
-        </div>
-        <div class="slide">
-          <img src="images/collect/11.jpg" alt="Post 3" />
-        </div>
-        <div class="slide">
-          <img src="images/collect/12.jpg" alt="Post 4" />
-        </div>
-      </div>
-
-      <button class="nav-btn prev-btn" id="prevBtn" aria-label="Previous">
-        ❮
-      </button>
-      <button class="nav-btn next-btn" id="nextBtn" aria-label="Next">❯</button>
-
-      <div class="dots-container" id="dotsContainer"></div>
+    <div>
+      <ul>
+        <li>
+          <a href="1.html">carousel 1</a>
+        </li>
+        <li>
+          <a href="2.html">carousel 2</a>
+        </li>
+        <li>
+          <a href="3.html">carousel 3</a>
+        </li>
+      </ul>
     </div>
-
-    <script>
-      const viewport = document.getElementById("viewport");
-      const prevBtn = document.getElementById("prevBtn");
-      const nextBtn = document.getElementById("nextBtn");
-      const dotsContainer = document.getElementById("dotsContainer");
-      const slides = document.querySelectorAll(".slide");
-
-      // Create dots
-      slides.forEach((_, i) => {
-        const dot = document.createElement("div");
-        dot.classList.add("dot");
-        if (i === 0) dot.classList.add("active");
-        dotsContainer.appendChild(dot);
-      });
-
-      const dots = document.querySelectorAll(".dot");
-
-      // Update UI on scroll
-      viewport.addEventListener("scroll", () => {
-        const index = Math.round(viewport.scrollLeft / viewport.offsetWidth);
-
-        // Update dots
-        dots.forEach((dot, i) => {
-          dot.classList.toggle("active", i === index);
-        });
-
-        // Hide/Show buttons
-        prevBtn.disabled = index === 0;
-        nextBtn.disabled = index === slides.length - 1;
-      });
-
-      // Button Clicks
-      nextBtn.onclick = () => {
-        viewport.scrollBy({ left: viewport.offsetWidth, behavior: "smooth" });
-      };
-
-      prevBtn.onclick = () => {
-        viewport.scrollBy({ left: -viewport.offsetWidth, behavior: "smooth" });
-      };
-
-      // Initial button check
-      prevBtn.disabled = true;
-    </script>
   </body>
 </html>
