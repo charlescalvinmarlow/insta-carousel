@@ -28,11 +28,11 @@
         margin-top: 40px;
       }
 
-      @media only screen and (max-width: 700px) {
+      /* @media only screen and (max-width: 700px) {
         .instagram-post {
           max-width: 95vw;
         }
-      }
+      } */
 
       /* The 1080x1440 Aspect Ratio Box */
       .carousel-viewport {
